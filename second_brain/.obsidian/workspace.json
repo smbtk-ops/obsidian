@@ -1,0 +1,220 @@
+{
+  "main": {
+    "id": "c3977c09de0105bf",
+    "type": "split",
+    "children": [
+      {
+        "id": "530cb6f07836e91e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "80d9f84530bfa68e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Linux/Users/Работа с группами.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Работа с группами"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0ae831fd68323f86",
+    "type": "split",
+    "children": [
+      {
+        "id": "17decb0cde558c9d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3dd4d0f0bf6dc199",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "84fe30fc2982a346",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": true,
+                "collapseAll": true,
+                "extraContext": true,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "576c22176e6df08c",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 243.5
+  },
+  "right": {
+    "id": "b095bdcb62b0f761",
+    "type": "split",
+    "children": [
+      {
+        "id": "f80461a0a028e34d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9364c3245ffa063e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Linux/Users/Работа с группами.md",
+                "collapseAll": true,
+                "extraContext": true,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для Работа с группами"
+            }
+          },
+          {
+            "id": "bb454d78e8fc51c2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Linux/Users/Работа с группами.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из Работа с группами"
+            }
+          },
+          {
+            "id": "74abe4a9388ac4cf",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "86edca5609aa0772",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Linux/Users/Работа с группами.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура Работа с группами"
+            }
+          },
+          {
+            "id": "501612a531658018",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Граф"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 264.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false
+    }
+  },
+  "active": "80d9f84530bfa68e",
+  "lastOpenFiles": [
+    "Linux/Users/Utils/Работа с пользователями/useradd.md",
+    "Linux/Default soft/Utils/Web/curl.md",
+    "Linux/Default soft/Utils/Архивторы/gzip gunzip.md",
+    "Linux/Default soft/Utils/Архивторы/tar.md",
+    "Linux/Default soft/Архиваторы.md",
+    "Linux/Default soft/Оращения к Web ресурсам.md",
+    "Linux/Default soft/Utils/Web/wget.md",
+    "Linux/Default soft/Utils/Web",
+    "Linux/Default soft/Utils/Архивторы",
+    "Linux/Default soft/Utils/Архивторы/cpio.md",
+    "Linux/Default soft/Utils/Архивторы/zip unzip.md",
+    "Linux/tmux.md",
+    "Linux/Users/Работа с группами.md",
+    "Linux/Default soft/Utils",
+    "Linux/Users/Utils/Работа с пользователями/chpasswd.md",
+    "Linux/Default soft",
+    "Linux/Users/Повышение полномочий.md",
+    "Linux/Users/Limits.md",
+    "Linux/Users/SUID, SGID и Sticky bit.md",
+    "Linux/Users/Права на файлы.md",
+    "Linux/Users/Работа с пользователями.md",
+    "Linux/Users/Поиск файлов с установленными SUID и SGID.md",
+    "Linux/Users/Utils/Права на файлы/chgrp.md",
+    "Linux/Users/Utils/Права на файлы/chmod.md",
+    "Linux/Users/Utils/Права на файлы/chown.md",
+    "Linux/Users/Utils/Права на файлы/ls.md",
+    "Linux/Users/Utils/Права на файлы",
+    "Linux/update-alternatives.md",
+    "Linux/Users/Utils/Работа с пользователями/chfn.md",
+    "Linux/Users/Utils/Работа с группами/groupmod.md",
+    "Linux/Users/Utils/Работа с группами",
+    "Linux/Users/Utils/Работа с пользователями",
+    "Linux/Users/Utils",
+    "Linux/Users",
+    "Linux",
+    "Без названия.canvas"
+  ]
+}
