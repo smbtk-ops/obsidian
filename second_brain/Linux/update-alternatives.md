@@ -26,7 +26,7 @@ editor -> /etc/alternatives/editor -> /usr/bin/nano
 2. /etc/alternatives/editor — это промежуточная ссылка, которую update-alternatives управляет.
 3. /usr/bin/nano — это фактический исполняемый файл.
 
-### ** Зачем это нужно?**
+### **Зачем это нужно?**
 - Выбор версии интерпретатора Python: python2 vs python3
 - Переключение между gcc и clang
 - Использование разных JVM: openjdk-11 vs openjdk-17
@@ -47,7 +47,7 @@ sudo update-alternatives --config python
 ```
 Ты увидишь список, выберешь нужное — и всё, теперь python будет вести на нужную версию.
 
-### ** Ключи команды update-alternatives**
+### **Ключи команды update-alternatives**
 
 |**Ключ**|**Описание**|**Пример**|
 |---|---|---|
