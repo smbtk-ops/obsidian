@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Linux/Default soft/Shared Libraries.md",
+                "file": "Linux/Default soft/Utils/mail/postfix.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Shared Libraries"
+              "title": "postfix"
             }
           }
         ]
@@ -180,8 +180,11 @@
   },
   "active": "80d9f84530bfa68e",
   "lastOpenFiles": [
-    "Linux/Default soft/ssh.md",
+    "Linux/Default soft/Почта.md",
+    "Linux/Default soft/Utils/mail/postfix.md",
+    "Linux/Default soft/Utils/mail",
     "Linux/Default soft/Shared Libraries.md",
+    "Linux/Default soft/ssh.md",
     "Linux/Default soft/Utils/ssh/ssh-keyscan.md",
     "Linux/Default soft/Utils/ssh/sshd.md",
     "Linux/Default soft/Utils/ssh/ssh.md",
@@ -207,15 +210,12 @@
     "Linux/Users/Работа с группами.md",
     "Linux/Default soft/Utils/Web/curl.md",
     "Linux/Default soft/Utils/Архивторы/gzip gunzip.md",
-    "Linux/Default soft/Utils/Архивторы/tar.md",
-    "Linux/Default soft/Utils/Web/wget.md",
     "Linux/Default soft/Utils/Web",
     "Linux/Default soft/Utils/Архивторы",
     "Linux/Default soft/Utils",
     "Linux/Default soft",
     "Linux/Users/Utils/Права на файлы",
     "Linux/Users/Utils/Работа с группами",
-    "Linux/Users/Utils/Работа с пользователями",
     "Без названия.canvas"
   ]
 }
