@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "second_brain/K8s/MetalLB в L2-режиме в Kubernetes.md",
+                "file": "second_brain/K8s/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MetalLB в L2-режиме в Kubernetes"
+              "title": "ClusterIssuer для внутренних адресов (SelfSigned и CA)"
             }
           }
         ]
@@ -171,8 +171,16 @@
   },
   "active": "229c2f5a34b468af",
   "lastOpenFiles": [
-    "second_brain/K8s/k8s install kubeam.md",
+    "second_brain/K8s/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
+    "second_brain/K8s/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
+    "second_brain/K8s/Cert-Manager, ClusterIssuer",
+    "second_brain/K8s/Установка NGINX Ingress Controller в Kubernetes.md",
     "second_brain/K8s/MetalLB в L2-режиме в Kubernetes.md",
+    "second_brain/Linux/Default soft/Архиваторы.md",
+    "second_brain/Linux/Default soft/Utils/Архивторы/gzip gunzip.md",
+    "second_brain/Linux/Default soft/Utils/Архивторы/tar.md",
+    "**MetalLB**.md",
+    "second_brain/K8s/k8s install kubeam.md",
     "second_brain/K8s/Mantaince and upgrade cluster.md",
     "second_brain/nginx/Location.md",
     "second_brain/K8s",
@@ -188,7 +196,6 @@
     "second_brain/Linux/update-alternatives.md",
     "second_brain/Linux/Default soft/Utils/Web/curl.md",
     "second_brain/Linux/Default soft/Оращения к Web ресурсам.md",
-    "second_brain/nginx",
-    "second_brain/Linux/Default soft/Архиваторы.md"
+    "second_brain/nginx"
   ]
 }
