@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "second_brain/K8s/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
+                "file": "second_brain/Linux/Kernel networking.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ClusterIssuer для внутренних адресов (SelfSigned и CA)"
+              "title": "Kernel networking"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 272.5
   },
   "right": {
     "id": "eafe9a86e45bd82d",
@@ -171,8 +171,18 @@
   },
   "active": "229c2f5a34b468af",
   "lastOpenFiles": [
-    "second_brain/K8s/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
+    "second_brain/Linux/tmux.md",
+    "second_brain/Linux/Kernel networking.md",
+    "second_brain/Linux/Users/SUID, SGID и Sticky bit.md",
+    "second_brain/Linux/Users/Limits.md",
+    "second_brain/Linux/Default soft/Utils/ssh/ssh-keygen.md",
+    "second_brain/Linux/Default soft/ssh.md",
+    "second_brain/Linux/Default soft/Shared Libraries.md",
+    "second_brain/Linux/Default soft/Текстовые редакторы.md",
+    "second_brain/Linux/Default soft/Utils/Web/curl.md",
+    "second_brain/Linux/Default soft/Оращения к Web ресурсам.md",
     "second_brain/K8s/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
+    "second_brain/K8s/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
     "second_brain/K8s/Cert-Manager, ClusterIssuer",
     "second_brain/K8s/Установка NGINX Ingress Controller в Kubernetes.md",
     "second_brain/K8s/MetalLB в L2-режиме в Kubernetes.md",
@@ -187,15 +197,8 @@
     "second_brain/Linux/Default soft/Utils/mail/postfix.md",
     "second_brain/Linux/Users/Работа с пользователями.md",
     "second_brain/Linux/Users/Работа с группами.md",
-    "second_brain/Linux/Users/Limits.md",
-    "second_brain/Linux/Users/SUID, SGID и Sticky bit.md",
     "second_brain/Linux/Users/Права на файлы.md",
     "second_brain/Linux/Users/Повышение полномочий.md",
-    "second_brain/Linux/Users/Поиск файлов с установленными SUID и SGID.md",
-    "second_brain/Linux/tmux.md",
-    "second_brain/Linux/update-alternatives.md",
-    "second_brain/Linux/Default soft/Utils/Web/curl.md",
-    "second_brain/Linux/Default soft/Оращения к Web ресурсам.md",
     "second_brain/nginx"
   ]
 }
