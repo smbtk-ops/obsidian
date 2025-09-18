@@ -49,20 +49,20 @@ sudo update-alternatives --config python
 
 ### **Ключи команды update-alternatives**
 
-|**Ключ**|**Описание**|**Пример**|
-|---|---|---|
-|--install|Добавить новую альтернативу|sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100|
-|--remove|Удалить альтернативу|sudo update-alternatives --remove editor /usr/bin/vim|
-|--remove-all|Удалить все альтернативы по имени|sudo update-alternatives --remove-all editor|
-|--auto|Включить автоматический режим выбора альтернативы|sudo update-alternatives --auto editor|
-|--set|Вручную установить конкретную альтернативу|sudo update-alternatives --set editor /usr/bin/nano|
-|--config|Запустить интерактивный выбор альтернативы|sudo update-alternatives --config editor|
-|--display|Показать информацию об альтернативе|update-alternatives --display editor|
-|--get-selections|Показать все альтернативы и выбранные значения|update-alternatives --get-selections|
-|--query|Вывести информацию о конкретной альтернативе|update-alternatives --query editor|
-|--list|Показать все пути, установленные как альтернативы|update-alternatives --list editor|
-|--help|Показать справку|update-alternatives --help|
-|--version|Показать версию утилиты|update-alternatives --version|
+| **Ключ**         | **Описание**                                      | **Пример**                                                                 |
+| ---------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
+| --install        | Добавить новую альтернативу                       | sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100 |
+| --remove         | Удалить альтернативу                              | sudo update-alternatives --remove editor /usr/bin/vim                      |
+| --remove-all     | Удалить все альтернативы по имени                 | sudo update-alternatives --remove-all editor                               |
+| --auto           | Включить автоматический режим выбора альтернативы | sudo update-alternatives --auto editor                                     |
+| --set            | Вручную установить конкретную альтернативу        | sudo update-alternatives --set editor /usr/bin/nano                        |
+| --config         | Запустить интерактивный выбор альтернативы        | sudo update-alternatives --config editor                                   |
+| --display        | Показать информацию об альтернативе               | update-alternatives --display editor                                       |
+| --get-selections | Показать все альтернативы и выбранные значения    | update-alternatives --get-selections                                       |
+| --query          | Вывести информацию о конкретной альтернативе      | update-alternatives --query editor                                         |
+| --list           | Показать все пути, установленные как альтернативы | update-alternatives --list editor                                          |
+| --help           | Показать справку                                  | update-alternatives --help                                                 |
+| --version        | Показать версию утилиты                           | update-alternatives --version                                              |
 
 ### **Пояснение к ключевым командам:**
 
