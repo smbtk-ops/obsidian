@@ -74,6 +74,12 @@ kube_proxy_strict_arp: true
 ```
 
 Для использования своего реджистри
+
+В нексусе добавить docker-proxy репозитории:
+docker-proxy-quay "https://quay.io"
+docker-proxy-k8s   "https://registry.k8s.io"
+и добавить их в  docker-images-group
+
 В файле inventory/k8s/group_vars/all/all.yml добавить:
 
 ```
