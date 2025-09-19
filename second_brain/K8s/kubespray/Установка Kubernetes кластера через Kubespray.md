@@ -60,10 +60,30 @@ all:
 helm_enabled: true
 metrics_server_enabled: true
 local_path_provisioner_enabled: true
+ingress_nginx_enabled: true
 metallb_enabled: true
 ```
 
 _(при желании можно включить и другие аддоны — список есть в этом же файле)._
+
+Для использования metalLB
+В файле inventory/k8s/group_vars/k8s_cluster/k8s-cluster.yml:
+
+```yaml
+kube_proxy_strict_arp: true
+```
+
+Для использования своего реджистри
+В файле inventory/k8s/group_vars/all/all.yml добавить:
+
+```
+registry_host: "nexus.dev.mllive.by"
+
+kube_image_repo: "{{ registry_host }}/docker-images-group"
+gcr_image_repo: "{{ registry_host }}/docker-images-group"
+docker_image_repo: "{{ registry_host }}/docker-images-group"
+quay_image_repo: "{{ registry_host }}/docker-images-group"
+```
 
 ---
 
@@ -72,7 +92,7 @@ _(при желании можно включить и другие аддоны
 Выполняем установку кластера:
 
 ```bash
-ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -b --extra-vars "@inventory/k8s/group_vars/k8s_cluster/addons.yml"
+sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -f 1 -b --extra-vars "@inventory/k8s/group_vars/k8s_cluster/addons.yml"
 ```
 
 ---
@@ -102,10 +122,29 @@ kubeadm_certificate_key: >-
   }}
 ```
 
-После этого снова запускаем установку:
+### Проблема:
 
+Ошибка вида:
+```
+TASK [kubernetes/preinstall : Stop if access_ip is not pingable] **************************************************************************************************************************************************
+fatal: [master1]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.191", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+fatal: [master2]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.192", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+fatal: [worker1]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.194", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+fatal: [worker2]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.195", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+fatal: [master3]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.193", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+```
+
+### Решение:
+Зайди на каждую ноду (master1, master2, master3, worker1, worker2).  
+Для Ubuntu/Debian:
+
+`sudo apt update`
+`sudo apt install -y iputils-ping`
+
+После этого снова запускаем установку:
 ```bash
-ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -b --extra-vars "@inventory/k8s/group_vars/k8s_cluster/addons.yml"
+sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -f 1 -b --extra-vars "@inventory/k8s/group_vars/k8s_cluster/addons.yml"
 ```
 
 ---

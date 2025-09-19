@@ -173,6 +173,8 @@
   "lastOpenFiles": [
     "second_brain/K8s/kubespray/Установка Python 3.13 и подготовка окружения для Kubespray.md",
     "second_brain/K8s/kubespray/Установка Kubernetes кластера через Kubespray.md",
+    "second_brain/K8s/kubeadm/Mantaince and upgrade cluster.md",
+    "second_brain/K8s/kubeadm/k8s install kubeam.md",
     "second_brain/K8s/kubeadm/MetalLB в L2-режиме в Kubernetes.md",
     "second_brain/K8s/kubeadm/Установка NGINX Ingress Controller в Kubernetes.md",
     "second_brain/Linux/update-alternatives.md",
@@ -195,8 +197,6 @@
     "second_brain/Linux/Default soft/Utils/Архивторы/gzip gunzip.md",
     "second_brain/Linux/Default soft/Utils/Архивторы/tar.md",
     "**MetalLB**.md",
-    "second_brain/K8s/kubeadm/k8s install kubeam.md",
-    "second_brain/K8s/kubeadm/Mantaince and upgrade cluster.md",
     "second_brain/nginx/Location.md",
     "second_brain/K8s",
     "second_brain/Linux/Default soft/Utils/mail/postfix.md",
