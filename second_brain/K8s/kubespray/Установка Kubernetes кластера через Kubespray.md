@@ -61,7 +61,15 @@ helm_enabled: true
 metrics_server_enabled: true
 local_path_provisioner_enabled: true
 ingress_nginx_enabled: true
+
 metallb_enabled: true
+metallb_protocol: "layer2"
+metallb_config:
+  address_pools:
+    primary:
+      ip_range:
+        - 192.168.88.196-192.168.88.199  # Тут указать нужный пулл
+      auto_assign: true
 ```
 
 _(при желании можно включить и другие аддоны — список есть в этом же файле)._
@@ -98,7 +106,7 @@ quay_image_repo: "{{ registry_host }}/docker-images-group"
 Выполняем установку кластера:
 
 ```bash
-sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -f 1 -b --extra-vars "@inventory/k8s/group_vars/k8s_cluster/addons.yml"
+sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -b
 ```
 
 ---
@@ -150,7 +158,7 @@ fatal: [master3]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.193"
 
 После этого снова запускаем установку:
 ```bash
-sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -f 1 -b --extra-vars "@inventory/k8s/group_vars/k8s_cluster/addons.yml"
+sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -b
 ```
 
 ---
@@ -167,6 +175,9 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 Для проверки:
 `kubectl get nodes`
 
+**Если вдруг не появился пул адресов для MetalLB:**
+`kubectl -n metallb-system get ipaddresspools.metallb.io`
+
 Сделай отдельный YAML-файл, например `metallb-layer2.yaml`:
 ```
 apiVersion: metallb.io/v1beta1
@@ -176,7 +187,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.88.195-192.168.88.199  # Указать интересующий пул
+    - 192.168.88.196-192.168.88.199  # Указать интересующий пул
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement

@@ -42,6 +42,7 @@ python --version
 cd ~
 git clone git@github.com:kubernetes-sigs/kubespray.git
 cd kubespray
+git checkout tags/v2.27.0 # Переключится на интересующий тег
 ```
 
 ## 5. Создание виртуального окружения (venv)
@@ -69,3 +70,27 @@ ansible --version
 ```
 
 Если видите версию Ansible и путь в ваш `venv`, значит всё работает.
+
+## 8. Использовать Ansible для подготовки серверов
+```
+git clone git@bitbucket.org:maxlinecode/maxline-ansible.git
+```
+
+Добавить необходимые сервера в invintory.ini:
+
+```
+# k8s hosts
+
+[k8s_dev_kubespray]
+master-1 ansible_host=192.168.88.191
+master-2 ansible_host=192.168.88.192
+master-3 ansible_host=192.168.88.193
+worker-1 ansible_host=192.168.88.194
+worker-2 ansible_host=192.168.88.195
+```
+
+И запустить:
+
+```
+ansible-playbook 00_prepare_kubespray.yml -i inventory.ini --limit k8s_dev_kubespray -e 'ansible_user= ansible_password= ansible_sudo_pass='
+```
