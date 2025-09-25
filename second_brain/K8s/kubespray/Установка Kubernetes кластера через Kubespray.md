@@ -1,6 +1,10 @@
 
 ## 1. Создание инвентарного файла
 
+```
+cp -rfp inventory/sample/. inventory/k8s
+```
+
 Создаём файл `./inventory/k8s/inventory.yaml` и добавляем описание мастер и воркер-нод:
 
 ```yaml
@@ -50,6 +54,13 @@ all:
       hosts: {}
 ```
 
+В файле `inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yml` обнови параметр:
+```yaml
+kube_version: "1.32.8"
+```
+или ту версию, которая поддерживается выбранным Kubespray-тегом.
+либо можно передать параметром через -e в команде запуска ansible playbook (не рекомендуется)
+
 ---
 
 ## 2. Настройка аддонов
@@ -70,7 +81,27 @@ metallb_config:
       ip_range:
         - 192.168.88.196-192.168.88.199  # Тут указать нужный пулл
       auto_assign: true
+
+kube_vip_enabled: true
+kube_vip_arp_enabled: true
+kube_vip_controlplane_enabled: true
+kube_vip_address: 192.168.88.190  # Указать вип айпи из той же подсети где и сам куб
+apiserver_loadbalancer_domain_name: "{{ kube_vip_address }}"
+loadbalancer_apiserver:
+  address: "{{ kube_vip_address }}"
+  port: 6443
+# kube_vip_interface: eth0  # если ошибиться с интерфейсом, работать не будет (если все интерфейсы на мастерах назывются одинаково то можно указать тут)
+kube_vip_services_enabled: false
 ```
+
+**Если имена интерфейсов отличаются то:**
+
+создаем файлы количество которых равно количеству мастеров в кластере по пути `inventory/k8s/host_vars`
+Например:
+`master1.yml master2.yml master3.yml` и указываем в них имена интерфейсов:
+
+`kube_vip_interface: ens18`
+`kube_vip_interface: eth0`  и тд.
 
 _(при желании можно включить и другие аддоны — список есть в этом же файле)._
 
