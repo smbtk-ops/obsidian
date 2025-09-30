@@ -64,3 +64,5 @@ sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml \
 - Для **удаления**: cordon/drain → remove-node.yml (или `kubectl delete node` + upgrade-cluster.yml) → правка инвентаря.
 - Для **добавления**: правка инвентаря → cluster.yml с `--limit`.
 
+
+
