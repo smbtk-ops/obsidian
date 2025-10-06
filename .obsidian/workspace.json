@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "second_brain/K8s/kubespray/Удаление и добавление master нод.md",
+                "file": "second_brain/K8s/kubespray/Бекап и восстановление кластера.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Удаление и добавление master нод"
+              "title": "Бекап и восстановление кластера"
             }
           }
         ]
@@ -171,10 +171,12 @@
   },
   "active": "229c2f5a34b468af",
   "lastOpenFiles": [
-    "second_brain/K8s/kubespray/Удаление и добавление worker нод.md",
+    "second_brain/K8s/kubespray/Полное пересоздание сертификатов кластера.md",
+    "second_brain/K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
+    "second_brain/K8s/kubespray/Бекап и восстановление кластера.md",
     "second_brain/K8s/kubespray/Установка Kubernetes кластера через Kubespray.md",
     "second_brain/K8s/kubespray/Удаление и добавление master нод.md",
-    "second_brain/K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
+    "second_brain/K8s/kubespray/Удаление и добавление worker нод.md",
     "second_brain/K8s/kubespray/Поверка работоспособности кластера после установки.md",
     "second_brain/K8s/kubespray/Установка Python 3.13 и подготовка окружения для Kubespray.md",
     "second_brain/K8s/kubeadm/MetalLB в L2-режиме в Kubernetes.md",
@@ -198,8 +200,6 @@
     "second_brain/K8s/kubeadm/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
     "second_brain/K8s/kubeadm/Cert-Manager, ClusterIssuer",
     "second_brain/Linux/Default soft/Архиваторы.md",
-    "second_brain/Linux/Default soft/Utils/Архивторы/gzip gunzip.md",
-    "second_brain/Linux/Default soft/Utils/Архивторы/tar.md",
     "second_brain/K8s",
     "second_brain/nginx"
   ]
