@@ -105,7 +105,7 @@ kube_vip_services_enabled: false
 
 _(при желании можно включить и другие аддоны — список есть в этом же файле)._
 
-Для использования metalLB
+Для использования metalLB или kube_vip
 В файле inventory/k8s/group_vars/k8s_cluster/k8s-cluster.yml:
 
 ```yaml
