@@ -13,12 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Linux/Default soft/Utils/mail/postfix.md",
-                "mode": "source",
-                "source": false
+                "file": "K8s/LimitRange и ResourceQuota в Kubernetes.md",
+                "mode": "preview",
+                "source": false,
+                "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "postfix"
+              "title": "LimitRange и ResourceQuota в Kubernetes"
             }
           }
         ]
@@ -78,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 243.5
+    "width": 336.5
   },
   "right": {
     "id": "b095bdcb62b0f761",
@@ -170,6 +171,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Создать новую базу": false,
       "switcher:Меню быстрого перехода": false,
       "graph:Граф": false,
       "canvas:Создать новый холст": false,
@@ -180,8 +182,16 @@
   },
   "active": "80d9f84530bfa68e",
   "lastOpenFiles": [
-    "Linux/Default soft/Почта.md",
+    "K8s/kubespray/Поверка работоспособности кластера после установки.md",
+    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
+    "K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
+    "nginx/Location.md",
+    "K8s/kubespray/Бекап и восстановление кластера.md",
+    "K8s/kubespray/Полное пересоздание сертификатов кластера.md",
+    "K8s/kubeadm/Mantaince and upgrade cluster.md",
+    "K8s/kubeadm/Установка NGINX Ingress Controller в Kubernetes.md",
     "Linux/Default soft/Utils/mail/postfix.md",
+    "Linux/Default soft/Почта.md",
     "Linux/Default soft/Utils/mail",
     "Linux/Default soft/Shared Libraries.md",
     "Linux/Default soft/ssh.md",
@@ -200,16 +210,8 @@
     "Linux/Default soft/Пакетные менеджеры.md",
     "Linux/Default soft/Оращения к Web ресурсам.md",
     "Linux/Default soft/Архиваторы.md",
-    "Linux/Default soft/Utils/Редакторы/mc.md",
     "Linux/Default soft/Utils/Редакторы",
-    "Linux/Default soft/Utils/Пакетные менеджеры/snap.md",
-    "Linux/Default soft/Utils/Пакетные менеджеры/yum, dnf.md",
-    "Linux/Default soft/Utils/Пакетные менеджеры/apt.md",
-    "Linux/Default soft/Utils/Пакетные менеджеры/dpkg.md",
     "Linux/Default soft/Utils/Пакетные менеджеры",
-    "Linux/Users/Работа с группами.md",
-    "Linux/Default soft/Utils/Web/curl.md",
-    "Linux/Default soft/Utils/Архивторы/gzip gunzip.md",
     "Linux/Default soft/Utils/Web",
     "Linux/Default soft/Utils/Архивторы",
     "Linux/Default soft/Utils",
