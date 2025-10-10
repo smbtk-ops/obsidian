@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "K8s/LimitRange и ResourceQuota в Kubernetes.md",
-                "mode": "preview",
+                "file": "K8s/Vertical Pod Autoscaler.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "LimitRange и ResourceQuota в Kubernetes"
+              "title": "Vertical Pod Autoscaler"
             }
           }
         ]
@@ -182,8 +182,9 @@
   },
   "active": "80d9f84530bfa68e",
   "lastOpenFiles": [
-    "K8s/kubespray/Поверка работоспособности кластера после установки.md",
     "K8s/LimitRange и ResourceQuota в Kubernetes.md",
+    "K8s/Vertical Pod Autoscaler.md",
+    "K8s/kubespray/Поверка работоспособности кластера после установки.md",
     "K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
     "nginx/Location.md",
     "K8s/kubespray/Бекап и восстановление кластера.md",
@@ -209,7 +210,6 @@
     "Linux/update-alternatives.md",
     "Linux/Default soft/Пакетные менеджеры.md",
     "Linux/Default soft/Оращения к Web ресурсам.md",
-    "Linux/Default soft/Архиваторы.md",
     "Linux/Default soft/Utils/Редакторы",
     "Linux/Default soft/Utils/Пакетные менеджеры",
     "Linux/Default soft/Utils/Web",
