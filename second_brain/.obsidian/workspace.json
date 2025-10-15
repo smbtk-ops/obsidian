@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "K8s/Vertical Pod Autoscaler.md",
+                "file": "K8s/kubeadm/k8s install kubeam.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "Vertical Pod Autoscaler"
+              "title": "k8s install kubeam"
             }
           }
         ]
@@ -182,15 +182,18 @@
   },
   "active": "80d9f84530bfa68e",
   "lastOpenFiles": [
-    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
+    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
+    "K8s/Установка NGINX Ingress Controller в Kubernetes.md",
+    "K8s/Helm/Базвое руководство по Helm для Kubernetes.md",
     "K8s/Vertical Pod Autoscaler.md",
+    "K8s/Helm",
+    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
     "K8s/kubespray/Поверка работоспособности кластера после установки.md",
     "K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
     "nginx/Location.md",
     "K8s/kubespray/Бекап и восстановление кластера.md",
     "K8s/kubespray/Полное пересоздание сертификатов кластера.md",
     "K8s/kubeadm/Mantaince and upgrade cluster.md",
-    "K8s/kubeadm/Установка NGINX Ingress Controller в Kubernetes.md",
     "Linux/Default soft/Utils/mail/postfix.md",
     "Linux/Default soft/Почта.md",
     "Linux/Default soft/Utils/mail",
@@ -208,8 +211,6 @@
     "Linux/Default soft/Текстовые редакторы.md",
     "Linux/Default soft/Utils/Редакторы/vim.md",
     "Linux/update-alternatives.md",
-    "Linux/Default soft/Пакетные менеджеры.md",
-    "Linux/Default soft/Оращения к Web ресурсам.md",
     "Linux/Default soft/Utils/Редакторы",
     "Linux/Default soft/Utils/Пакетные менеджеры",
     "Linux/Default soft/Utils/Web",
@@ -217,7 +218,6 @@
     "Linux/Default soft/Utils",
     "Linux/Default soft",
     "Linux/Users/Utils/Права на файлы",
-    "Linux/Users/Utils/Работа с группами",
     "Без названия.canvas"
   ]
 }
