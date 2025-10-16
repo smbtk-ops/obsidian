@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "K8s/kubeadm/k8s install kubeam.md",
+                "file": "K8s/kubeadm/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "k8s install kubeam"
+              "title": "Установка Cert-Manager и настройка ClusterIssuer"
             }
           }
         ]
@@ -182,8 +182,12 @@
   },
   "active": "80d9f84530bfa68e",
   "lastOpenFiles": [
-    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
+    "K8s/kubeadm/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
     "K8s/Установка NGINX Ingress Controller в Kubernetes.md",
+    "K8s/kubeadm/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
+    "K8s/kubeadm/MetalLB в L2-режиме в Kubernetes.md",
+    "K8s/kubeadm/k8s install kubeam.md",
+    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
     "K8s/Helm/Базвое руководство по Helm для Kubernetes.md",
     "K8s/Vertical Pod Autoscaler.md",
     "K8s/Helm",
@@ -207,10 +211,6 @@
     "Linux/Default soft/Utils/ssh/ssh-keygen.md",
     "Linux/Default soft/Utils/ssh",
     "Linux/Users/Utils/Работа с пользователями/useradd.md",
-    "Linux/Users/Работа с пользователями.md",
-    "Linux/Default soft/Текстовые редакторы.md",
-    "Linux/Default soft/Utils/Редакторы/vim.md",
-    "Linux/update-alternatives.md",
     "Linux/Default soft/Utils/Редакторы",
     "Linux/Default soft/Utils/Пакетные менеджеры",
     "Linux/Default soft/Utils/Web",
