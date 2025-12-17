@@ -150,4 +150,137 @@ root hard core unlimited
 - **Web-серверы** → требуют агрессивного уменьшения таймаутов (`tcp_fin_timeout=5`), больших очередей (`somaxconn=65535`), буферов под 10G.
 - **DB-серверы** → упор на **стабильность**, не злоупотреблять `tcp_tw_reuse`, оставить больше времени на FIN, снизить `dirty_background_ratio`.
 - **Docker-хосты/K8s** → критичен `nf_conntrack_max` (иначе будет `nf_conntrack: table full, dropping packet`), а также лимиты inotify.
-    
+
+
+/etc/sysctl.d/99-k8s-worker.conf
+
+```
+# ============================
+#  Kubernetes Worker Node Tune
+# ============================
+
+# ----------------------------
+# Сокеты и очереди
+# ----------------------------
+net.core.somaxconn = 32768
+net.core.netdev_max_backlog = 65535
+
+# ----------------------------
+# TCP-поведение
+# ----------------------------
+net.ipv4.tcp_fin_timeout = 5
+net.ipv4.tcp_max_syn_backlog = 16384
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_slow_start_after_idle = 0
+
+# ----------------------------
+# TCP буферы
+# ----------------------------
+net.ipv4.tcp_rmem = 4096 8388608 16777216
+net.ipv4.tcp_wmem = 4096 4194394 16777216
+
+# ----------------------------
+# Conntrack (очень важно для kube-proxy/NAT)
+# ----------------------------
+net.netfilter.nf_conntrack_max = 1048576
+net.netfilter.nf_conntrack_buckets = 262144
+
+# ----------------------------
+# ICMP / базовая защита
+# ----------------------------
+net.ipv4.icmp_echo_ignore_all = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# ----------------------------
+# Keepalive (для стабильности коннектов внутри кластера)
+# ----------------------------
+net.ipv4.tcp_keepalive_time = 300
+net.ipv4.tcp_keepalive_intvl = 15
+net.ipv4.tcp_keepalive_probes = 5
+
+# ----------------------------
+# Память / кеши
+# ----------------------------
+vm.swappiness = 0
+vm.dirty_background_ratio = 10
+vm.dirty_ratio = 20
+
+# ----------------------------
+# Inotify (важно для контейнеров, kubelet, flannel/calico)
+# ----------------------------
+fs.inotify.max_user_instances = 8192
+fs.inotify.max_user_watches = 524288
+
+```
+
+sudo sysctl --system
+sysctl -a | grep nf_conntrack
+sysctl -a | grep tcp_
+
+
+/etc/sysctl.d/99-k8s-master.conf
+
+```
+# =====================================
+#  Kubernetes Master / Control-Plane
+# =====================================
+
+# ----------------------------
+# Сокеты и очереди
+# ----------------------------
+net.core.somaxconn = 16384
+net.core.netdev_max_backlog = 16384
+
+# ----------------------------
+# TCP-поведение
+# ----------------------------
+net.ipv4.tcp_fin_timeout = 15
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_tw_reuse = 0
+net.ipv4.tcp_slow_start_after_idle = 1
+
+# ----------------------------
+# TCP буферы
+# ----------------------------
+net.ipv4.tcp_rmem = 8192 262144 4194304
+net.ipv4.tcp_wmem = 8192 262144 4194304
+
+# ----------------------------
+# Conntrack
+# (на master нет массового NAT, но нужен запас)
+# ----------------------------
+net.netfilter.nf_conntrack_max = 262144
+net.netfilter.nf_conntrack_buckets = 65536
+
+# ----------------------------
+# ICMP / безопасность
+# ----------------------------
+net.ipv4.icmp_echo_ignore_all = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# ----------------------------
+# Keepalive
+# (важно для etcd, долгих TCP-сессий apiserver ↔ etcd)
+# ----------------------------
+net.ipv4.tcp_keepalive_time = 1800
+net.ipv4.tcp_keepalive_intvl = 30
+net.ipv4.tcp_keepalive_probes = 9
+
+# ----------------------------
+# Память / кеши
+# ----------------------------
+vm.swappiness = 1
+vm.dirty_background_ratio = 5
+vm.dirty_ratio = 15
+
+# ----------------------------
+# Inotify (нормальное значение для control-plane)
+# ----------------------------
+fs.inotify.max_user_instances = 1024
+fs.inotify.max_user_watches = 131072
+
+```
+
+sudo sysctl --system
+sysctl net.ipv4.tcp_keepalive_time
+sysctl net.netfilter.nf_conntrack_max

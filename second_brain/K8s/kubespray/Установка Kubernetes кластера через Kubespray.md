@@ -81,6 +81,8 @@ metallb_config:
       ip_range:
         - 192.168.88.196-192.168.88.199  # Тут указать нужный пулл
       auto_assign: true
+    layer2:
+      - primary
 
 kube_vip_enabled: true
 kube_vip_arp_enabled: true
