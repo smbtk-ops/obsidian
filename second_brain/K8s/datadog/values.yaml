@@ -1,0 +1,40 @@
+datadog:
+  # API ключ Datadog (получить в https://app.datadoghq.eu/organization-settings/api-keys)
+  apiKey: ""  # Указать свой ключ или использовать existingSecret
+
+  # Регион Datadog (eu для Европы)
+  site: datadoghq.eu
+
+  # Теги для всех метрик и логов
+  tags:
+    - env:production
+    - service:slotegrator
+
+  # Настройки kubelet
+  kubelet:
+    host:
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    tlsVerify: false
+
+  # Сбор логов
+  logs:
+    enabled: true
+    containerCollectAll: true
+
+  # APM (трейсинг)
+  apm:
+    portEnabled: true
+    socketEnabled: true
+
+  # Мониторинг процессов
+  processAgent:
+    enabled: true
+    processCollection: true
+
+# Cluster Agent для HA и Kubernetes интеграции
+clusterAgent:
+  replicas: 2
+  pdb:
+    create: true

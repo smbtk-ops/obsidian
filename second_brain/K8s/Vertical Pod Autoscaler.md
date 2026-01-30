@@ -1,9 +1,15 @@
+## 1. Что такое VPA
+
 Vertical Pod Autoscaler помогает:
 
 - анализировать реальное потребление ресурсов;
 - оптимизировать requests/limits;
 - повышать утилизацию нод и снижать издержки.
-#### 1. Установка VPA
+
+---
+
+## 2. Установка VPA
+
 ```bash
 git clone https://github.com/kubernetes/autoscaler/
 cd autoscaler
@@ -16,7 +22,8 @@ REGISTRY=registry.k8s.io/autoscaling TAG=1.0.0 ./hack/vpa-process-yamls.sh apply
 
 ---
 
-#### 2. Создание тестового Deployment
+## 3. Создание тестового Deployment
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -49,7 +56,9 @@ spec:
 Простой pod с минимальными ресурсами.
 
 ---
-#### 3. Создание VerticalPodAutoscaler
+
+## 4. Создание VerticalPodAutoscaler
+
 ```yaml
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
@@ -67,7 +76,9 @@ spec:
 Режим `Off` — только сбор рекомендаций, без изменений подов.
 
 ---
-#### 4. Проверка рекомендаций
+
+## 5. Проверка рекомендаций
+
 ```bash
 kubectl get vpa alpine-vpa -o yaml
 ```
@@ -75,7 +86,9 @@ kubectl get vpa alpine-vpa -o yaml
 В секции `status.recommendation` отображаются новые значения CPU и памяти.
 
 ---
-#### 5. Включение автоматического пересоздания подов
+
+## 6. Включение автоматического пересоздания подов
+
 ```yaml
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
@@ -91,7 +104,9 @@ spec:
 ```
 
 ---
-#### 6. Тест нагрузки
+
+## 7. Тест нагрузки
+
 ```bash
 kubectl exec -it <имя-pod> -- dd if=/dev/urandom of=/dev/zero
 kubectl -n kube-system logs -f deploy/vpa-updater
@@ -100,7 +115,8 @@ kubectl -n kube-system logs -f deploy/vpa-updater
 VPA пересоздаст pod с новыми лимитами на ресурсы.
 
 ---
-#### 7. Важные замечания
+
+## 8. Важные замечания
 
 - Для работы нужен установленный **metrics-server**.
 - На **production** рекомендуется режим `Off` — чтобы не было рестартов подов в рабочее время.

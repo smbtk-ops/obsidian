@@ -1,7 +1,6 @@
-
 ## 1. Создание инвентарного файла
 
-```
+```bash
 cp -rfp inventory/sample/. inventory/k8s
 ```
 
@@ -55,11 +54,12 @@ all:
 ```
 
 В файле `inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yml` обнови параметр:
+
 ```yaml
 kube_version: "1.32.8"
 ```
-или ту версию, которая поддерживается выбранным Kubespray-тегом.
-либо можно передать параметром через -e в команде запуска ansible playbook (не рекомендуется)
+
+Или ту версию, которая поддерживается выбранным Kubespray-тегом. Либо можно передать параметром через `-e` в команде запуска ansible playbook (не рекомендуется).
 
 ---
 
@@ -74,12 +74,13 @@ local_path_provisioner_enabled: true
 ingress_nginx_enabled: true
 
 metallb_enabled: true
-metallb_protocol: "layer2"
+metallb_speaker_enabled: "{{ metallb_enabled }}"
+metallb_namespace: "metallb-system"
 metallb_config:
   address_pools:
     primary:
       ip_range:
-        - 192.168.88.196-192.168.88.199  # Тут указать нужный пулл
+        - 192.168.88.196-192.168.88.199
       auto_assign: true
     layer2:
       - primary
@@ -87,43 +88,51 @@ metallb_config:
 kube_vip_enabled: true
 kube_vip_arp_enabled: true
 kube_vip_controlplane_enabled: true
-kube_vip_address: 192.168.88.190  # Указать вип айпи из той же подсети где и сам куб
+kube_vip_address: 192.168.88.190
 apiserver_loadbalancer_domain_name: "{{ kube_vip_address }}"
 loadbalancer_apiserver:
   address: "{{ kube_vip_address }}"
   port: 6443
-# kube_vip_interface: eth0  # если ошибиться с интерфейсом, работать не будет (если все интерфейсы на мастерах назывются одинаково то можно указать тут)
+# kube_vip_interface: eth0  # если ошибиться с интерфейсом, работать не будет
 kube_vip_services_enabled: false
 ```
 
-**Если имена интерфейсов отличаются то:**
+### 2.1. Если имена интерфейсов отличаются
 
-создаем файлы количество которых равно количеству мастеров в кластере по пути `inventory/k8s/host_vars`
-Например:
-`master1.yml master2.yml master3.yml` и указываем в них имена интерфейсов:
+Создаем файлы количество которых равно количеству мастеров в кластере по пути `inventory/k8s/host_vars`.
 
-`kube_vip_interface: ens18`
-`kube_vip_interface: eth0`  и тд.
+Например: `master1.yml`, `master2.yml`, `master3.yml` и указываем в них имена интерфейсов:
 
-_(при желании можно включить и другие аддоны — список есть в этом же файле)._
+```yaml
+kube_vip_interface: ens18
+```
 
-Для использования metalLB или kube_vip
-В файле inventory/k8s/group_vars/k8s_cluster/k8s-cluster.yml:
+```yaml
+kube_vip_interface: eth0
+```
+
+При желании можно включить и другие аддоны — список есть в этом же файле.
+
+### 2.2. Настройка kube-proxy для MetalLB или kube_vip
+
+В файле `inventory/k8s/group_vars/k8s_cluster/k8s-cluster.yml`:
 
 ```yaml
 kube_proxy_strict_arp: true
 ```
 
-Для использования своего реджистри
+### 2.3. Использование своего registry
 
 В нексусе добавить docker-proxy репозитории:
-docker-proxy-quay "https://quay.io"
-docker-proxy-k8s   "https://registry.k8s.io"
-и добавить их в  docker-images-group
 
-В файле inventory/k8s/group_vars/all/all.yml добавить:
+- `docker-proxy-quay` — `https://quay.io`
+- `docker-proxy-k8s` — `https://registry.k8s.io`
 
-```
+И добавить их в `docker-images-group`.
+
+В файле `inventory/k8s/group_vars/all/all.yml` добавить:
+
+```yaml
 registry_host: "nexus.dev.mllive.by"
 
 kube_image_repo: "{{ registry_host }}/docker-images-group"
@@ -146,16 +155,17 @@ sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.y
 
 ## 4. Возможные проблемы и их решение
 
-### Проблема:
+### 4.1. Ошибка lockfile
 
-Ошибка вида:
+**Проблема:**
 
 ```
 Файл существует: .../kubespray/inventory/k8s/credentials/<hash>.ansible_lockfile
 ```
 
-### Решение:
-!!!Данное решение можно использовать перед первым запуском что бы сразу избежать возможной ошибки!!!
+**Решение:**
+
+Данное решение можно использовать перед первым запуском чтобы сразу избежать возможной ошибки.
 
 Открываем `inventory/k8s/group_vars/k8s_cluster/k8s-cluster.yml` и заменяем блок `kubeadm_certificate_key` на:
 
@@ -169,50 +179,59 @@ kubeadm_certificate_key: >-
   }}
 ```
 
-### Проблема:
+### 4.2. Ошибка ping not found
 
-Ошибка вида:
-```
-TASK [kubernetes/preinstall : Stop if access_ip is not pingable] **************************************************************************************************************************************************
-fatal: [master1]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.191", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
-fatal: [master2]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.192", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
-fatal: [worker1]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.194", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
-fatal: [worker2]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.195", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
-fatal: [master3]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.193", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+**Проблема:**
 
 ```
+TASK [kubernetes/preinstall : Stop if access_ip is not pingable]
+fatal: [master1]: FAILED! => {"changed": false, "cmd": "ping -c1 192.168.88.191", "msg": "[Errno 2] No such file or directory: b'ping'", "rc": 2}
+```
 
-### Решение:
-Зайди на каждую ноду (master1, master2, master3, worker1, worker2).  
+**Решение:**
+
+Зайди на каждую ноду (master1, master2, master3, worker1, worker2).
+
 Для Ubuntu/Debian:
 
-`sudo apt update`
-`sudo apt install -y iputils-ping`
+```bash
+sudo apt update
+sudo apt install -y iputils-ping
+```
 
 После этого снова запускаем установку:
+
 ```bash
 sudo env "PATH=$PATH" ansible-playbook -i inventory/k8s/inventory.yaml cluster.yml -u root -b
 ```
 
 ---
 
-### **Последние шаги:**
+## 5. Последние шаги
 
-Скопировать конфиг файл:
-```
+### 5.1. Скопировать конфиг файл
+
+```bash
 mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-Для проверки:
-`kubectl get nodes`
+### 5.2. Проверка
 
-**Если вдруг не появился пул адресов для MetalLB:**
-`kubectl -n metallb-system get ipaddresspools.metallb.io`
+```bash
+kubectl get nodes
+```
+
+### 5.3. Если не появился пул адресов для MetalLB
+
+```bash
+kubectl -n metallb-system get ipaddresspools.metallb.io
+```
 
 Сделай отдельный YAML-файл, например `metallb-layer2.yaml`:
-```
+
+```yaml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -220,7 +239,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.88.196-192.168.88.199  # Указать интересующий пул
+    - 192.168.88.196-192.168.88.199
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -230,8 +249,12 @@ metadata:
 spec:
   ipAddressPools:
     - ip-pool
-
 ```
 
 Применить его:
-`kubectl apply -f metallb-layer2.yaml`
+
+```bash
+kubectl apply -f metallb-layer2.yaml
+```
+
+---

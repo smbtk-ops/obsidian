@@ -1,0 +1,51 @@
+# Production конфигурация Datadog Agent
+# Соответствует текущей установке в prod кластере
+
+datadog:
+  # API ключ - использовать secret
+  # apiKey: ""
+  apiKeyExistingSecret: datadog-secret
+
+  # EU регион
+  site: datadoghq.eu
+
+  # Глобальные теги
+  tags:
+    - env:production
+    - service:slotegrator
+
+  # Kubelet
+  kubelet:
+    host:
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    tlsVerify: false
+
+  # Логи
+  logs:
+    enabled: true
+    containerCollectAll: true
+
+  # APM (трейсинг)
+  apm:
+    portEnabled: true
+    socketEnabled: true
+
+  # Мониторинг процессов
+  processAgent:
+    enabled: true
+    processCollection: true
+
+# Cluster Agent
+clusterAgent:
+  replicas: 2
+  pdb:
+    create: true
+
+# Для мониторинга master нод (раскомментировать при необходимости)
+# agents:
+#   tolerations:
+#     - key: node-role.kubernetes.io/control-plane
+#       operator: Exists
+#       effect: NoSchedule

@@ -1,21 +1,22 @@
-## Зачем нужен
+## 1. Зачем нужен
 
 - **Ingress** — объект, который описывает правила маршрутизации HTTP(S) трафика на сервисы в кластере.
 - **Ingress Controller** — процессор Ingress-объектов (например, `ingress-nginx`), который применяет правила и проксирует трафик к backend-сервисам.
 
-## Предварительные условия
+---
+
+## 2. Предварительные условия
 
 - Доступный Kubernetes-кластер (kubectl работает).
-    
 - Helm установлен.
-    
 - Для публикации через `LoadBalancer`:
     - В облаке — облачный LB-контроллер.
     - В on-prem — установлен **MetalLB** с пулом адресов.
 - Пространство имён `ingress-nginx` будет создано автоматически командами ниже.
+
 ---
 
-## Установка через Helm repo (быстрый старт)
+## 3. Установка через Helm repo (быстрый старт)
 
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
@@ -25,6 +26,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 ```
 
 Проверка:
+
 ```bash
 kubectl -n ingress-nginx get deployments,svc
 kubectl get svc -n ingress-nginx ingress-nginx-controller --watch
@@ -33,15 +35,18 @@ kubectl get svc -n ingress-nginx ingress-nginx-controller --watch
 Ожидаем `EXTERNAL-IP` у `service/ingress-nginx-controller` (пример: `192.168.0.161`). В on-prem его выдаёт MetalLB, в облаках — нативный контроллер.
 
 ---
-## Кастомизация через values.yaml
+
+## 4. Кастомизация через values.yaml
 
 Выгрузите базовые значения и отредактируйте:
+
 ```bash
 helm show values ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx > values.yaml
 ```
 
 Ключевые параметры, которые часто меняют (фрагмент `values.yaml`):
+
 ```yaml
 controller:
   kind: Deployment
@@ -73,6 +78,7 @@ udp: {}
 ```
 
 Применение с кастомными значениями:
+
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
   -f values.yaml \
@@ -83,25 +89,27 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 ---
 
-## Установка из GitHub (удобно для офлайн/корп. контура)
+## 5. Установка из GitHub (для офлайн/корп. контура)
 
-Вариант 1 — исходники с каталогом charts:
+### 5.1. Вариант 1 — исходники с каталогом charts
 
 ```bash
 git clone https://github.com/kubernetes/ingress-nginx/ -b helm-chart-4.10.1
 # далее установка из charts/ по стандартной команде helm install/upgrade
 ```
 
-Вариант 2 — готовый архив конкретной версии чарта:
+### 5.2. Вариант 2 — готовый архив конкретной версии
+
 ```bash
 wget https://github.com/kubernetes/ingress-nginx/releases/download/helm-chart-4.10.1/ingress-nginx-4.10.1.tgz
 helm install ingress-nginx ingress-nginx-4.10.1.tgz -n ingress-nginx --create-namespace
 ```
 
-> Плюсы подхода: версионирование своих правок в Git, независимость от внешнего репозитория.
+Плюсы подхода: версионирование своих правок в Git, независимость от внешнего репозитория.
 
 ---
-## Варианты публикации контроллера наружу
+
+## 6. Варианты публикации контроллера наружу
 
 - **LoadBalancer** — предпочтительно (MetalLB или облачный LB).
 - **NodePort** — слушает порты на всех нодах, затем трафик уходит на поды контроллера.
@@ -111,9 +119,10 @@ helm install ingress-nginx ingress-nginx-4.10.1.tgz -n ingress-nginx --create-na
 
 ---
 
-## Базовый пример публикации сервиса через Ingress
+## 7. Базовый пример публикации сервиса через Ingress
 
-Манифесты: Deployment + Service + Ingress (namespace `default`).
+Манифесты: Deployment + Service + Ingress (namespace `default`):
+
 ```yaml
 ---
 apiVersion: apps/v1
@@ -171,7 +180,7 @@ spec:
 
 ---
 
-## Пример маршрутизации по subpath и host
+## 8. Пример маршрутизации по subpath и host
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -197,10 +206,12 @@ spec:
 
 ---
 
-## Версии API и IngressClass
+## 9. Версии API и IngressClass
 
-Актуальный API Ingress — `networking.k8s.io/v1`.  
+Актуальный API Ingress — `networking.k8s.io/v1`.
+
 IngressClass позволяет указать, какой контроллер обрабатывает объект:
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: IngressClass
@@ -216,14 +227,16 @@ spec:
 
 ---
 
-## TLS для Ingress (kubernetes.io/tls)
+## 10. TLS для Ingress
 
-Создайте секрет c сертификатом и ключом:
+Создайте секрет с сертификатом и ключом:
+
 ```bash
 kubectl create secret tls tls-secret --cert=tls.cert --key=tls.key -n default
 ```
 
 Ingress с TLS и host:
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -256,9 +269,10 @@ spec:
 
 ---
 
-## Полезные аннотации: примеры
+## 11. Полезные аннотации
 
-### Вставка «сырого» конфигурационного фрагмента NGINX (server-snippet)
+### 11.1. Server-snippet (вставка конфига NGINX)
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -284,9 +298,10 @@ spec:
                   number: 80
 ```
 
-### Basic-Auth для Ingress
+### 11.2. Basic-Auth для Ingress
 
 Создание секрета:
+
 ```bash
 htpasswd -c auth sergei
 kubectl create secret generic basic-auth --from-file=auth -n default
@@ -294,6 +309,7 @@ kubectl get secret basic-auth -n default -o yaml
 ```
 
 Ingress с basic-auth:
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -328,62 +344,76 @@ curl -u login:password -D - -s -o /dev/null -H 'Host: blue.example.com' http://1
 
 ---
 
-## Отладка и типичные проблемы
+## 12. Отладка и типичные проблемы
 
-### 1) Ingress не обрабатывается контроллером
+### 12.1. Ingress не обрабатывается контроллером
 
-- Проверьте адрес:
+Проверьте адрес:
+
 ```bash
-   kubectl get ingress -A
+kubectl get ingress -A
 ```
-Если колонка `ADDRESS` пустая, подождите 1–2 минуты. Если пусто и дальше — проверяем класс и конфигурацию контроллера.
-- Существует ли указанный класс:
-  ```bash
-  kubectl get ingressclasses
-   ```
-    Должен быть `nginx` с `controller: k8s.io/ingress-nginx`.
-- Совпадает ли класс у контроллера:
-  ```bash
-  kubectl -n ingress-nginx get deploy ingress-nginx-controller -o yaml | grep -A15 args
-  ```
-Должны быть аргументы вида:
-```
-   --controller-class=k8s.io/ingress-nginx
-   --ingress-class=nginx
-```
-- Пересоздайте проблемный Ingress и смотрите логи контроллера:
-  ```bash
-  kubectl -n ingress-nginx logs deploy/ingress-nginx-controller
-   ```
 
-### 2) Адрес есть, но сервис не отвечает
+Если колонка `ADDRESS` пустая, подождите 1–2 минуты. Если пусто и дальше — проверяем класс и конфигурацию контроллера.
+
+Существует ли указанный класс:
+
+```bash
+kubectl get ingressclasses
+```
+
+Должен быть `nginx` с `controller: k8s.io/ingress-nginx`.
+
+Совпадает ли класс у контроллера:
+
+```bash
+kubectl -n ingress-nginx get deploy ingress-nginx-controller -o yaml | grep -A15 args
+```
+
+Должны быть аргументы вида:
+
+```
+--controller-class=k8s.io/ingress-nginx
+--ingress-class=nginx
+```
+
+Пересоздайте проблемный Ingress и смотрите логи контроллера:
+
+```bash
+kubectl -n ingress-nginx logs deploy/ingress-nginx-controller
+```
+
+### 12.2. Адрес есть, но сервис не отвечает
 
 - В Ingress проверьте имя `service.name` и `port.number`. Namespace должен совпадать с сервисом.
 - В Service проверьте `selector` и соответствующие метки на подах. Проверьте `targetPort`.
 - В Pod проверьте `containerPort` и что приложение действительно слушает нужный порт.
 - Проверка сетевой доступности:
-  ```bash
-  kubectl -n default exec -it deploy/nginx -- sh -c "apt-get update && apt-get install -y curl || true; curl -I http://127.0.0.1:80 || true"
-   ```
 
-### 3) TLS не тот (виден «default kubernetes…»)
+```bash
+kubectl -n default exec -it deploy/nginx -- sh -c "apt-get update && apt-get install -y curl || true; curl -I http://127.0.0.1:80 || true"
+```
+
+### 12.3. TLS не тот (виден «default kubernetes…»)
 
 - Проверьте имя секрета и его namespace.
 - Проверьте соответствие ключа и сертификата:
- ```bash
-   openssl x509 -in tls.cert -noout -text | grep -A1 "Subject Alternative Name"
-   openssl rsa -in tls.key -check -noout
-   ```
-- Убедитесь, что host в `rules.hosts` совпадает с SAN в сертификате.
-    
 
-### 4) Нет `EXTERNAL-IP` у сервиса контроллера
+```bash
+openssl x509 -in tls.cert -noout -text | grep -A1 "Subject Alternative Name"
+openssl rsa -in tls.key -check -noout
+```
+
+- Убедитесь, что host в `rules.hosts` совпадает с SAN в сертификате.
+
+### 12.4. Нет EXTERNAL-IP у сервиса контроллера
 
 - On-prem: проверьте, что установлен MetalLB, пул адресов корректный и включает подсеть нод не пересекающимся способом.
 - Облако: проверьте квоты и состояние LB-ресурса у провайдера.
 
 ---
-## Полезные команды
+
+## 13. Полезные команды
 
 ```bash
 helm list -n ingress-nginx
@@ -396,7 +426,7 @@ kubectl get svc -n ingress-nginx ingress-nginx-controller -o wide
 
 ---
 
-## Рекомендации по прод-эксплуатации
+## 14. Рекомендации по прод-эксплуатации
 
 - Минимум **2 реплики** контроллера.
 - Выделенные ноды под Ingress (taints/tolerations, nodeSelector/affinity).
