@@ -63,6 +63,7 @@ sentinel:
 master:
   persistence:
     enabled: false
+    # С Longhorn — см. секцию 3.1
   resources:
     requests:
       cpu: 500m
@@ -81,6 +82,7 @@ replica:
   replicaCount: 3
   persistence:
     enabled: false
+    # С Longhorn — см. секцию 3.1
   resources:
     requests:
       cpu: 500m
@@ -107,6 +109,146 @@ metrics:
   serviceMonitor:
     enabled: false
 ```
+
+---
+
+## 3.1. Persistence с Longhorn
+
+Для сохранения данных между перезапусками подов используется StorageClass `longhorn`. Каждая нода Redis получит свой PVC.
+
+### Изменения в values.yaml
+
+Заменить блоки `persistence` для master и replica:
+
+```yaml
+master:
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+
+replica:
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+```
+
+### Полный пример values.yaml с persistence
+
+```yaml
+architecture: replication
+
+auth:
+  enabled: true
+  existingSecret: "redis-myapp-secret"
+  existingSecretPasswordKey: "redis-password"
+
+sentinel:
+  enabled: true
+  quorum: 2
+  downAfterMilliseconds: 5000
+  failoverTimeout: 60000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  configuration: |-
+    sentinel resolve-hostnames yes
+    sentinel announce-hostnames yes
+
+master:
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 2
+      memory: 6Gi
+  configuration: |-
+    maxmemory 5gb
+    maxmemory-policy allkeys-lru
+    tcp-keepalive 300
+
+replica:
+  replicaCount: 3
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 2
+      memory: 6Gi
+  configuration: |-
+    maxmemory 5gb
+    maxmemory-policy allkeys-lru
+    tcp-keepalive 300
+
+metrics:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 150m
+      memory: 192Mi
+  serviceMonitor:
+    enabled: false
+```
+
+При включённом persistence убраны `save ""` и `appendonly no` — Redis будет использовать RDB/AOF по умолчанию для записи на диск.
+
+### Проверка PVC после установки
+
+```bash
+kubectl get pvc -n myapp -l app.kubernetes.io/name=redis
+```
+
+Ожидаемый результат:
+
+```
+NAME                          STATUS   VOLUME       CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+redis-data-redis-myapp-node-0 Bound    pvc-xxx...   10Gi       RWO            longhorn       5m
+redis-data-redis-myapp-node-1 Bound    pvc-xxx...   10Gi       RWO            longhorn       5m
+redis-data-redis-myapp-node-2 Bound    pvc-xxx...   10Gi       RWO            longhorn       5m
+```
+
+### Расширение тома
+
+Longhorn поддерживает online expansion — увеличение без даунтайма:
+
+```bash
+kubectl patch pvc redis-data-redis-myapp-node-0 -n myapp \
+  -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
+```
+
+Повторить для каждой ноды (node-0, node-1, node-2).
+
+### Важно
+
+- `size` должен быть больше ожидаемого объёма данных в Redis (RDB дамп + AOF + full sync файлы)
+- При `replicaCount: 3` создаётся 3 PVC — убедиться что в Longhorn достаточно свободного места
+- Longhorn `defaultReplicaCount: 2` означает что каждый PVC хранится на 2 воркерах — фактически потребуется `size * replicaCount * 2` дискового пространства
 
 ---
 
