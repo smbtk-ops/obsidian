@@ -21,8 +21,51 @@
               "icon": "lucide-file",
               "title": "Установка Kubernetes кластера через Kubespray"
             }
+          },
+          {
+            "id": "4a38b922b28058eb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "K8s/kubespray/Проверка работоспособности кластера после установки.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Проверка работоспособности кластера после установки"
+            }
+          },
+          {
+            "id": "53ce4c6029b14a57",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "K8s/Chrony — NTP синхронизация в кластере.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Chrony — NTP синхронизация в кластере"
+            }
+          },
+          {
+            "id": "2125c57f66966f21",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "K8s/Longhorn/values.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "values"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -180,44 +223,44 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "80d9f84530bfa68e",
+  "active": "2125c57f66966f21",
   "lastOpenFiles": [
-    "Linux/Kernel networking.md",
+    "K8s/Helm/Redis Sentinel в Kubernetes (Bitnami Helm).md",
+    "K8s/Longhorn/Установка и управление.md",
+    "K8s/Longhorn/values.md",
+    "K8s/datadog/Инструкция по настройке и установке.md",
     "nexus/Groovy-скрипт очистки старых Docker-тегов в Nexus.md",
+    "Fate/admin-backend-secrets.md",
+    "K8s/Prod кластер - сетевые доступы.md",
+    "Fate",
+    "K8s/kubespray/Полное пересоздание сертификатов кластера.md",
+    "K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
+    "K8s/kubespray/Бекап и восстановление кластера.md",
+    "K8s/kubespray/Проверка работоспособности кластера после установки.md",
+    "K8s/Vertical Pod Autoscaler.md",
+    "K8s/datadog/values.yaml",
+    "K8s/datadog/values-production.yaml",
+    "K8s/datadog",
+    "K8s/Новая папка",
+    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
     "K8s/Full backup.md",
-    "K8s/kubespray/Установка Python 3.13 и подготовка окружения для Kubespray.md",
     "K8s/Установка NGINX Ingress Controller в Kubernetes.md",
+    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
+    "K8s/Longhorn/values.yaml",
+    "K8s/Longhorn/values.yaml.md",
+    "K8s/kubespray/Установка Kubernetes кластера через Kubespray.md",
+    "K8s/Longhorn",
+    "Linux/Kernel networking.md",
+    "K8s/kubespray/Установка Python 3.13 и подготовка окружения для Kubespray.md",
     "nexus",
     "K8s/Helm/Базвое руководство по Helm для Kubernetes.md",
-    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
     "K8s/kubeadm/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
     "K8s/kubeadm/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
     "K8s/kubeadm/MetalLB в L2-режиме в Kubernetes.md",
     "K8s/kubeadm/k8s install kubeam.md",
-    "K8s/Vertical Pod Autoscaler.md",
     "K8s/Helm",
-    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
     "K8s/kubespray/Поверка работоспособности кластера после установки.md",
-    "K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
-    "nginx/Location.md",
-    "K8s/kubespray/Бекап и восстановление кластера.md",
-    "K8s/kubespray/Полное пересоздание сертификатов кластера.md",
-    "K8s/kubeadm/Mantaince and upgrade cluster.md",
-    "Linux/Default soft/Utils/mail/postfix.md",
-    "Linux/Default soft/Почта.md",
     "Linux/Default soft/Utils/mail",
-    "Linux/Default soft/Shared Libraries.md",
-    "Linux/Default soft/ssh.md",
-    "Linux/Default soft/Utils/ssh/ssh-keyscan.md",
-    "Linux/Default soft/Utils/ssh/sshd.md",
-    "Linux/Default soft/Utils/ssh/ssh.md",
-    "Linux/Default soft/Utils/ssh",
-    "Linux/Default soft/Utils/Редакторы",
-    "Linux/Default soft/Utils/Пакетные менеджеры",
-    "Linux/Default soft/Utils/Web",
-    "Linux/Default soft/Utils/Архивторы",
-    "Linux/Default soft/Utils",
-    "Linux/Default soft",
     "Без названия.canvas"
   ]
 }
