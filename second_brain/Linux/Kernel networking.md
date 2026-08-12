@@ -284,3 +284,141 @@ fs.inotify.max_user_watches = 131072
 sudo sysctl --system
 sysctl net.ipv4.tcp_keepalive_time
 sysctl net.netfilter.nf_conntrack_max
+
+---
+
+# NIC-level тюнинг (ethtool)
+
+Sysctl настраивает ядро, но пакеты сначала проходят через NIC (сетевую карту). Если NIC не справляется — пакеты теряются до того, как ядро их увидит.
+
+## 1. Ring Buffer
+
+Ring buffer — аппаратная очередь NIC, куда складываются входящие пакеты до обработки ядром. При burst-нагрузке маленький буфер переполняется и NIC дропает пакеты.
+
+### 1.1. Диагностика
+
+```bash
+# Проверить текущий и максимальный размер буфера
+ethtool -g <interface>
+
+# Проверить дропы на аппаратном уровне
+ethtool -S <interface> | grep -i -E 'drop|miss|error|overflow' | grep -v ': 0$'
+
+# Ключевые счётчики:
+# rx_missed_errors — NIC не смог передать пакет ядру (ring buffer full)
+# rx_dropped       — ядро отбросило пакет (нет памяти, фильтр)
+# fdir_overflow    — переполнение Flow Director
+```
+
+### 1.2. Типичная проблема
+
+На серверах с 10G NIC (Intel X710, i40e) дефолтный ring buffer = **512**, максимум = **8192**. При нагрузке 40K+ pps буфер переполняется.
+
+Признаки:
+- `rx_missed_errors` растёт
+- периодические таймауты / ретрансмиты
+- дропы видны в `/proc/net/dev` (колонка drop)
+
+### 1.3. Исправление
+
+```bash
+# Увеличить ring buffer (применяется мгновенно, без разрыва соединений)
+ethtool -G <interface> rx 4096 tx 4096
+```
+
+| Значение | Плюсы | Минусы |
+|----------|-------|--------|
+| 512 (дефолт) | Низкий latency | Дропы при burst |
+| 4096 | Баланс latency/надёжность | — |
+| 8192 (max) | Максимальная устойчивость к burst | Чуть выше latency (~мкс) |
+
+### 1.4. Persistent (systemd)
+
+```bash
+cat > /etc/systemd/system/nic-tuning.service << 'EOF'
+[Unit]
+Description=NIC ring buffer and performance tuning for enp177s0f0
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/ethtool -G enp177s0f0 rx 4096 tx 4096
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable nic-tuning.service
+systemctl start nic-tuning.service
+```
+
+Откат:
+```bash
+ethtool -G enp177s0f0 rx 512 tx 512
+systemctl disable nic-tuning.service
+```
+
+---
+
+## 2. NIC Queues (Combined Channels)
+
+Количество очередей NIC определяет сколько CPU ядер параллельно обрабатывают входящие пакеты (RSS — Receive Side Scaling).
+
+```bash
+# Проверить текущее количество очередей
+ethtool -l <interface>
+
+# Установить (обычно = количеству ядер, но не больше max)
+ethtool -L <interface> combined <N>
+```
+
+Для 64-ядерного сервера с max 63 combined — оптимально оставить 63.
+
+---
+
+## 3. Полезные команды диагностики
+
+```bash
+# Скорость и состояние линка
+ethtool <interface> | grep -E 'Speed|Duplex|Link'
+
+# Полная статистика NIC (ошибки, дропы, счётчики)
+ethtool -S <interface> | grep -v ': 0$'
+
+# Ring buffer
+ethtool -g <interface>
+
+# Queues
+ethtool -l <interface>
+
+# Offload features (GRO, GSO, TSO)
+ethtool -k <interface>
+
+# Сводка по дропам в ядре
+cat /proc/net/dev
+
+# Conntrack usage
+cat /proc/sys/net/netfilter/nf_conntrack_count
+cat /proc/sys/net/netfilter/nf_conntrack_max
+
+# TCP connections summary
+ss -s
+
+# Softnet stats (per-CPU packet processing, 2nd column = drops)
+cat /proc/net/softnet_stat
+```
+
+---
+
+## 4. Рекомендации по уровням
+
+| Уровень | Инструмент | Что настраивать |
+|---------|-----------|-----------------|
+| NIC (hardware) | `ethtool` | Ring buffer, queues, offload |
+| Ядро (network stack) | `sysctl` | Conntrack, TCP buffers, backlog |
+| Приложение | Конфиг сервиса | Keepalive, connection pools |
+
+Порядок диагностики: NIC дропы → softnet drops → conntrack → TCP retransmits → приложение.

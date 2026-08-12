@@ -56,16 +56,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "K8s/Longhorn/values.md",
+                "file": "K8s/Longhorn/Longhorn и Multipathd.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Longhorn и Multipathd"
+            }
+          },
+          {
+            "id": "47255f350527e57e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Fate/admin-backend-secrets.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "values"
+              "title": "admin-backend-secrets"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -223,44 +237,44 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "2125c57f66966f21",
+  "active": "47255f350527e57e",
   "lastOpenFiles": [
-    "K8s/Helm/Redis Sentinel в Kubernetes (Bitnami Helm).md",
-    "K8s/Longhorn/Установка и управление.md",
+    "nginx/3 - Статические файлы и location.md",
+    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
+    "K8s/Containerd — очистка образов и GC kubelet.md",
+    "Linux/Kernel networking.md",
     "K8s/Longhorn/values.md",
+    "K8s/Longhorn/Longhorn и Multipathd.md",
+    "K8s/Longhorn/Установка и управление.md",
+    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
+    "K8s/Prod кластер — сервисы, конфигмапы и секреты.md",
+    "K8s/Prod кластер - сетевые доступы.md",
     "K8s/datadog/Инструкция по настройке и установке.md",
     "nexus/Groovy-скрипт очистки старых Docker-тегов в Nexus.md",
-    "Fate/admin-backend-secrets.md",
-    "K8s/Prod кластер - сетевые доступы.md",
-    "Fate",
-    "K8s/kubespray/Полное пересоздание сертификатов кластера.md",
-    "K8s/kubespray/Обновление Kubernetes-кластера с Kubespray через теги.md",
-    "K8s/kubespray/Бекап и восстановление кластера.md",
-    "K8s/kubespray/Проверка работоспособности кластера после установки.md",
     "K8s/Vertical Pod Autoscaler.md",
+    "K8s/PV, PVC и StorageClass.md",
+    "K8s/Full backup.md",
+    "K8s/kubespray/Установка Kubernetes кластера через Kubespray.md",
+    "K8s/Установка Zabbix-мониторинга (agent + proxy) в Kubernetes.md",
+    "K8s/Диагностика медленных upstream ответов (upstream_header_time).md",
+    "Без названия.canvas",
+    "Без названия.base",
+    "K8s/CI-CD/Сборка манагерки.md",
+    "K8s/CI-CD",
+    "Linux/update-alternatives.md",
+    "Linux/tmux.md",
+    "K8s/kubeadm/Mantaince and upgrade cluster.md",
+    "K8s/kubeadm/k8s install kubeam.md",
+    "K8s/Helm/Redis Sentinel в Kubernetes (Bitnami Helm).md",
+    "K8s/Helm/Базвое руководство по Helm для Kubernetes.md",
+    "K8s/Установка NGINX Ingress Controller в Kubernetes.md",
+    "PS Store Parser",
+    "Fate",
     "K8s/datadog/values.yaml",
     "K8s/datadog/values-production.yaml",
     "K8s/datadog",
     "K8s/Новая папка",
-    "K8s/LimitRange и ResourceQuota в Kubernetes.md",
-    "K8s/Full backup.md",
-    "K8s/Установка NGINX Ingress Controller в Kubernetes.md",
-    "K8s/Аннотации ingress-nginx и типовые кейсы.md",
     "K8s/Longhorn/values.yaml",
-    "K8s/Longhorn/values.yaml.md",
-    "K8s/kubespray/Установка Kubernetes кластера через Kubespray.md",
-    "K8s/Longhorn",
-    "Linux/Kernel networking.md",
-    "K8s/kubespray/Установка Python 3.13 и подготовка окружения для Kubespray.md",
-    "nexus",
-    "K8s/Helm/Базвое руководство по Helm для Kubernetes.md",
-    "K8s/kubeadm/Cert-Manager, ClusterIssuer/Установка Cert-Manager и настройка ClusterIssuer.md",
-    "K8s/kubeadm/Cert-Manager, ClusterIssuer/ClusterIssuer для внутренних адресов (SelfSigned и CA).md",
-    "K8s/kubeadm/MetalLB в L2-режиме в Kubernetes.md",
-    "K8s/kubeadm/k8s install kubeam.md",
-    "K8s/Helm",
-    "K8s/kubespray/Поверка работоспособности кластера после установки.md",
-    "Linux/Default soft/Utils/mail",
-    "Без названия.canvas"
+    "K8s/Longhorn"
   ]
 }
